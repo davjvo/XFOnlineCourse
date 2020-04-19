@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="clr-namespace:XFOnlineCourses.Utils" xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="XFOnlineCourses.Views.CoursePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="pancakeView:PancakeView" x:Key="PancakeContainer">
+                <Setter Property="Padding" Value="0,7.5"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <pancakeView:PancakeView Padding="0,30">
+                <FlexLayout Style="{StaticResource FlexContainer}">
+                    <Label Text="{x:Static utils:IconFont.CaretLeft}" 
+                           Style="{StaticResource FontAwesomeIcon}" 
+                           FontSize="35">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label 
+                        Text="{x:Static utils:IconFont.EllipsisV}" 
+                        Style="{StaticResource FontAwesomeIcon}" 
+                        FontSize="25"
+                    />
+                </FlexLayout>
+            </pancakeView:PancakeView>
+            <pancakeView:PancakeView Style="{DynamicResource PancakeContainer}">
+                <FlexLayout Style="{StaticResource FlexContainer}">
+                    <Label Text="{Binding Course.Title}"  Style="{StaticResource TitleText}" />
+                    <Label Text="{Binding Course.Price, StringFormat='{0:C}'}" Style="{StaticResource TitleText}" />
+                </FlexLayout>
+            </pancakeView:PancakeView>
+            <StackLayout Orientation="Horizontal" Padding="0,7.5">
+                <Label Text="{x:Static utils:IconFont.Star}" 
+                       Style="{StaticResource FontAwesomeIcon}"
+                       TextColor="#FE9533"
+                />
+                <Label Text="4.9" />
+                <Label Text="|" />
+                <Label Text="{x:Static utils:IconFont.UserCircle}" Style="{StaticResource FontAwesomeIcon}" />
+                <Label Text="915,772" />
+            </StackLayout>
+            <pancakeView:PancakeView CornerRadius="25"  Style="{DynamicResource PancakeContainer}">
+                <Image Source="{Binding Course.Image}" />
+            </pancakeView:PancakeView>
+            <pancakeView:PancakeView  Style="{DynamicResource PancakeContainer}">
+                <FlexLayout Style="{StaticResource FlexContainer}">
+                    <Label Text="Course Outline" Style="{StaticResource TitleText}" />
+                    <pancakeView:PancakeView 
+                    Padding="30,10" 
+                    CornerRadius="25"
+                    Margin="0" 
+                    BackgroundColor="#FFA32C">
+                        <Label Text="Add to cart" FontSize="18" TextColor="White" />
+                    </pancakeView:PancakeView>
+                </FlexLayout>
+
+            </pancakeView:PancakeView>
+            <CollectionView
+                ItemsSource="{Binding Course.Content}"
+            >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="2" />
+                            </Grid.RowDefinitions>
+                            <Label 
+                                Grid.RowSpan="2"
+                                Text="{x:Static utils:IconFont.PlayCircle}" 
+                                Style="{StaticResource FontAwesomeIcon}" 
+                                FontSize="30"
+                                TextColor="{Binding PlayColor}"
+                                VerticalTextAlignment="Center"
+                            />
+                            <Label 
+                                Grid.Column="1" 
+                                Text="{Binding Description}"
+                                FontSize="18"
+                                FontAttributes="Bold"
+                            />
+                            <Label 
+                                Grid.Column="1" 
+                                Grid.Row="1"
+                                Text="{Binding Duration}" />
+                            <BoxView 
+                                Grid.Column="1"
+                                Grid.Row="2"
+                                HeightRequest=".1" 
+                                BackgroundColor="#E4E7F6" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

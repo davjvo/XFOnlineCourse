@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:circleImage="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             xmlns:controls="clr-namespace:XFOnlineCourses.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:utils="clr-namespace:XFOnlineCourses.Utils" 
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="XFOnlineCourses.Views.HomePage"
+             x:Name="Page">
+    <ContentPage.Content>
+        <ScrollView Padding="15">
+            <StackLayout>
+                <pancakeView:PancakeView Padding="0,5">
+                    <FlexLayout Style="{StaticResource FlexContainer}" VerticalOptions="Center">
+                        <Image Source="menu" Style="{StaticResource Icono}" />
+                        <circleImage:CircleImage Source="model" WidthRequest="24" HeightRequest="24" Aspect="AspectFill" />
+                    </FlexLayout>
+                </pancakeView:PancakeView>
+                <pancakeView:PancakeView Padding="0,5">
+                    <FlexLayout Style="{StaticResource FlexContainer}" >
+                        <Label Text="Steven Bofill" Style="{StaticResource TitleText}" />
+                        <Label Text="{x:Static utils:IconFont.Search}" Style="{StaticResource FontAwesomeIcon}" />
+                    </FlexLayout>
+                </pancakeView:PancakeView>
+                <Frame 
+                    Padding="10" 
+                    Margin="0, 10" 
+                    BackgroundColor="#5E49CA" 
+                    HasShadow="False" 
+                    CornerRadius="7" 
+                >
+                    <FlexLayout JustifyContent="SpaceAround" >
+                        <StackLayout>
+                            <Label Text="80" Style="{StaticResource CourseTitleDesc}" />
+                            <Label Text="Total Courses" Style="{StaticResource CourseInfoDesc}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="20" Style="{StaticResource CourseTitleDesc}" />
+                            <Label Text="Categories" Style="{StaticResource CourseInfoDesc}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="35" Style="{StaticResource CourseTitleDesc}" />
+                            <Label Text="Instructors" Style="{StaticResource CourseInfoDesc}" />
+                        </StackLayout>
+                    </FlexLayout>
+                </Frame>
+                <FlexLayout JustifyContent="SpaceBetween">
+                    <Label Text="Top Categories" Style="{StaticResource TitleText}"/>
+                    <Label Text="View All" VerticalTextAlignment="End" FontSize="16" FontAttributes="Bold" TextColor="#FED6A2" />
+                </FlexLayout>
+                <FlexLayout
+                    BindableLayout.ItemsSource="{Binding Courses}"
+                    Direction="Column"
+                    HorizontalOptions="Center"
+                    HeightRequest="900" 
+                    Wrap="Wrap"
+                >
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <controls:CourseContainer 
+                                Image="{Binding Image}" 
+                                Title="{Binding Title}" 
+                                Description="{Binding Description}">
+                                <controls:CourseContainer.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={x:Reference Page}, Path=BindingContext.NavigateToCourseCommand }" 
+                                        CommandParameter="{Binding .}" />
+                                </controls:CourseContainer.GestureRecognizers>
+                            </controls:CourseContainer>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
